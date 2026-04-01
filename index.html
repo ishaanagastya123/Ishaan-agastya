@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ishaan | Portfolio</title>
+    <title>Ishaan Agastya</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+        :root {
+            --purple: #a855f7;
+            --dark: #0a0a0a;
+            --glass: rgba(20, 20, 30, 0.65);
+        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -14,18 +20,70 @@
             background: #0a0a0a;
             color: #e0e0e0;
             overflow-x: hidden;
-            line-height: 1.6;
+            cursor: none;
         }
-        h1, h2 { font-family: 'Space Grotesk', sans-serif; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
 
-        /* Hero Section */
+        /* Glassmorphic Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 5%;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.7);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+        nav a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 40px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover { color: var(--purple); }
+
+        /* Custom Glowing Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--purple);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s;
+        }
+        .cursor::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--purple);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Hero */
         #hero {
             height: 100vh;
-            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
             overflow: hidden;
         }
         #canvas {
@@ -36,248 +94,206 @@
         }
         .hero-content {
             z-index: 2;
-            max-width: 800px;
+            max-width: 900px;
             padding: 0 20px;
         }
         .hero-content h1 {
-            font-size: 4.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #a855f7, #3b82f6);
+            font-size: 5.5rem;
+            line-height: 1.05;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, #ffffff, #c4b5fd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .hero-content p {
-            font-size: 1.4rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: #ddd;
         }
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background: transparent;
-            border: 2px solid #a855f7;
-            color: #a855f7;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .btn:hover {
-            background: #a855f7;
-            color: white;
-            transform: translateY(-3px);
+        .subtext {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.85;
         }
 
-        /* Other Sections */
         section {
-            padding: 100px 20px;
-            max-width: 1100px;
+            padding: 120px 5%;
+            max-width: 1200px;
             margin: 0 auto;
         }
         h2 {
-            font-size: 3rem;
+            font-size: 3.2rem;
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
             color: #c4b5fd;
         }
-        .about-text {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-            opacity: 0.85;
-        }
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-        .skill {
-            background: #1a1a1a;
-            padding: 25px 15px;
-            border-radius: 20px;
-            transition: transform 0.3s;
-        }
-        .skill:hover { transform: scale(1.08); }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 24px;
+            padding: 32px;
+            transition: all 0.4s ease;
         }
-        .project-card {
-            background: #111;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s;
-        }
-        .project-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
-        }
-        .project-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-        }
-        .project-info {
-            padding: 25px;
+        .glass-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(168, 85, 247, 0.25);
+            border-color: var(--purple);
         }
 
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            background: #050505;
-        }
-
-        /* Navigation */
-        nav {
+        /* Click particles container */
+        #click-particles {
             position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9998;
         }
-        .logo { font-size: 1.8rem; font-weight: 600; color: #a855f7; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">Ishaan.</div>
-    </nav>
+    <!-- Glass Header -->
+    <header>
+        <div class="logo">Ishaan Agastya</div>
+        <nav>
+            <a href="#mindset">The Mindset</a>
+            <a href="#skills">Skill Matrix</a>
+            <a href="#creations">Creations</a>
+            <a href="#lab">The Lab</a>
+            <a href="#access">Access Point</a>
+        </nav>
+    </header>
 
+    <!-- Hero -->
     <section id="hero">
         <canvas id="canvas"></canvas>
         <div class="hero-content">
-            <h1>Hey, I'm Ishaan</h1>
-            <p>Creative Developer & Designer from Warangal, Telangana</p>
-            <a href="#projects" class="btn">Explore My Work</a>
+            <h1>Ishaan Agastya</h1>
+            <p class="tagline">Exploring Ideas. Building Systems. Becoming Limitless.</p>
+            <p class="subtext">A student driven by curiosity, creation, and continuous evolution.</p>
         </div>
     </section>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p class="about-text">
-            Passionate about building beautiful digital experiences with clean code and creative 3D visuals. 
-            Currently exploring web development, UI/UX, and immersive technologies. 
-            Based in Warangal, always open to exciting collaborations.
-        </p>
-    </section>
-
-    <section id="skills">
-        <h2>Skills</h2>
-        <div class="skills-grid">
-            <div class="skill"><strong>HTML & CSS</strong></div>
-            <div class="skill"><strong>JavaScript</strong></div>
-            <div class="skill"><strong>Three.js</strong></div>
-            <div class="skill"><strong>React</strong></div>
-            <div class="skill"><strong>UI/UX Design</strong></div>
-            <div class="skill"><strong>Python</strong></div>
-            <!-- Add more skills as needed -->
+    <!-- About / Mindset -->
+    <section id="mindset">
+        <h2>The Mindset</h2>
+        <div class="glass-card" style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.25rem; line-height: 1.7;">
+            <p>I am a polymath in training — relentlessly curious, strategically sharp, and obsessed with building high-performance systems across domains.</p>
+            <p style="margin-top: 20px;">Discipline, deep observation, creative execution, and self-mastery are my core operating principles.</p>
         </div>
     </section>
 
-    <section id="projects">
-        <h2>Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <img src="https://picsum.photos/id/1015/600/400" alt="Project 1">
-                <div class="project-info">
-                    <h3>Project One</h3>
-                    <p>Aesthetic 3D landing page with smooth animations.</p>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://picsum.photos/id/237/600/400" alt="Project 2">
-                <div class="project-info">
-                    <h3>Project Two</h3>
-                    <p>Interactive dashboard built with modern tech stack.</p>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://picsum.photos/id/201/600/400" alt="Project 3">
-                <div class="project-info">
-                    <h3>Project Three</h3>
-                    <p>Mobile-first e-commerce experience.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Skills, Projects, Blog, Contact sections are placeholders for now -->
+    <!-- I'll expand them fully once you confirm the base is working well -->
 
-    <footer>
-        <p>© 2026 Ishaan • Made with ❤️ in Warangal</p>
-        <p>Contact: your.email@example.com | LinkedIn | GitHub</p>
-    </footer>
+    <div id="click-particles"></div>
 
     <script>
-        // Three.js Scene Setup
-        let scene, camera, renderer;
-        let particles = [];
+        // Custom Cursor
+        const cursor = document.createElement('div');
+        cursor.className = 'cursor';
+        document.body.appendChild(cursor);
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Click particle burst (subtle white particles)
+        function createClickParticles(x, y) {
+            const container = document.getElementById('click-particles');
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('div');
+                p.style.position = 'absolute';
+                p.style.left = x + 'px';
+                p.style.top = y + 'px';
+                p.style.width = '4px';
+                p.style.height = '4px';
+                p.style.background = '#f0f0f0';
+                p.style.borderRadius = '50%';
+                p.style.opacity = '0.9';
+                p.style.pointerEvents = 'none';
+                container.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const vel = 2 + Math.random() * 4;
+                const vx = Math.cos(angle) * vel;
+                const vy = Math.sin(angle) * vel;
+
+                let life = 35;
+                const anim = setInterval(() => {
+                    life--;
+                    p.style.transform = `translate(${vx * (35-life)}px, ${vy * (35-life)}px)`;
+                    p.style.opacity = life / 35;
+                    if (life <= 0) {
+                        clearInterval(anim);
+                        p.remove();
+                    }
+                }, 16);
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            createClickParticles(e.clientX, e.clientY);
+        });
+
+        // Three.js Background with scroll-reactive particles
+        let scene, camera, renderer, particles;
+        let scrollY = 0;
 
         function initThree() {
             const canvas = document.getElementById('canvas');
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-            scene.add(ambientLight);
-            const pointLight = new THREE.PointLight(0xa855f7, 2, 100);
-            pointLight.position.set(10, 10, 10);
-            scene.add(pointLight);
+            // Purple particles
+            const geometry = new THREE.SphereGeometry(0.12, 12, 12);
+            const material = new THREE.MeshBasicMaterial({ color: 0xa855f7 });
 
-            // Particles
-            const geometry = new THREE.SphereGeometry(0.08, 16, 16);
-            const material = new THREE.MeshBasicMaterial({ color: 0xc4b5fd });
-
-            for (let i = 0; i < 150; i++) {
-                const particle = new THREE.Mesh(geometry, material);
-                particle.position.x = Math.random() * 40 - 20;
-                particle.position.y = Math.random() * 40 - 20;
-                particle.position.z = Math.random() * 40 - 20;
-                particle.userData = { speed: Math.random() * 0.02 + 0.005 };
-                scene.add(particle);
-                particles.push(particle);
+            particles = [];
+            for (let i = 0; i < 280; i++) {
+                const p = new THREE.Mesh(geometry, material);
+                p.position.set(
+                    Math.random() * 80 - 40,
+                    Math.random() * 80 - 40,
+                    Math.random() * 60 - 30
+                );
+                p.userData = { speed: 0.03 + Math.random() * 0.04 };
+                scene.add(p);
+                particles.push(p);
             }
 
-            camera.position.z = 25;
-
-            // Mouse interaction
-            let mouseX = 0, mouseY = 0;
-            document.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-            });
+            camera.position.z = 35;
 
             function animate() {
                 requestAnimationFrame(animate);
 
+                const scrollProgress = Math.min(window.scrollY / 800, 1);
+
                 particles.forEach(p => {
                     p.position.y -= p.userData.speed;
-                    if (p.position.y < -20) p.position.y = 20;
-                    p.rotation.x += 0.005;
-                    p.rotation.y += 0.008;
+                    if (p.position.y < -40) p.position.y = 40;
+
+                    // Color shift: purple → white on scroll
+                    const intensity = 1 - scrollProgress * 0.7;
+                    p.material.color.setRGB(0.66 * intensity, 0.33 * intensity, 1);
                 });
 
-                // Gentle camera movement
-                camera.position.x = mouseX * 3;
-                camera.position.y = mouseY * 2;
-                camera.lookAt(0, 0, 0);
+                // Subtle whoosh / light streak feel
+                camera.position.y = -window.scrollY * 0.015;
 
                 renderer.render(scene, camera);
             }
             animate();
         }
 
-        // Resize handler
         window.addEventListener('resize', () => {
             if (camera && renderer) {
                 camera.aspect = window.innerWidth / window.innerHeight;
@@ -286,10 +302,18 @@
             }
         });
 
-        // Initialize everything
         window.onload = () => {
             initThree();
         };
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
     </script>
 </body>
 </html>
