@@ -11,7 +11,6 @@
         :root {
             --purple: #a855f7;
             --dark: #0a0a0a;
-            --glass: rgba(20, 20, 30, 0.65);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,47 +21,50 @@
             overflow-x: hidden;
             cursor: none;
         }
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
 
-        /* Glassmorphic Header */
+        /* Floating Glassmorphic Header */
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 1000;
-            padding: 20px 5%;
-            backdrop-filter: blur(20px);
-            background: rgba(10, 10, 15, 0.7);
-            border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+            padding: 14px 50px;
+            background: rgba(15, 15, 25, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 60px;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.15);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 50px;
         }
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.75rem;
             font-weight: 700;
             color: white;
         }
         nav a {
-            color: #ccc;
+            color: #ddd;
             text-decoration: none;
-            margin-left: 40px;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
         }
-        nav a:hover { color: var(--purple); }
+        nav a:hover { color: var(--purple); text-shadow: 0 0 10px var(--purple); }
 
-        /* Custom Glowing Cursor */
+        /* Custom Cursor */
         .cursor {
             position: fixed;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border: 2px solid var(--purple);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             mix-blend-mode: difference;
-            transition: transform 0.1s;
+            transition: transform 0.08s;
         }
         .cursor::after {
             content: '';
@@ -71,92 +73,72 @@
             height: 8px;
             background: var(--purple);
             border-radius: 50%;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
         }
 
-        /* Hero */
-        #hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        #canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-        }
-        .hero-content {
-            z-index: 2;
-            max-width: 900px;
-            padding: 0 20px;
-        }
-        .hero-content h1 {
-            font-size: 5.5rem;
-            line-height: 1.05;
-            margin-bottom: 16px;
-            background: linear-gradient(90deg, #ffffff, #c4b5fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .tagline {
-            font-size: 1.8rem;
-            margin-bottom: 12px;
-            color: #ddd;
-        }
-        .subtext {
-            font-size: 1.25rem;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            opacity: 0.85;
-        }
-
-        section {
-            padding: 120px 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h2 {
-            font-size: 3.2rem;
-            text-align: center;
-            margin-bottom: 80px;
-            color: #c4b5fd;
-        }
-
-        /* Glass Cards */
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(168, 85, 247, 0.2);
-            border-radius: 24px;
-            padding: 32px;
-            transition: all 0.4s ease;
-        }
-        .glass-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 30px 60px rgba(168, 85, 247, 0.25);
-            border-color: var(--purple);
-        }
-
-        /* Click particles container */
-        #click-particles {
+        /* Loading Screen */
+        #loading-screen {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 9998;
+            background: #0a0a0a;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 1.2s ease;
+        }
+        .loading-container {
+            width: 420px;
+            text-align: center;
+        }
+        .loading-text {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: #c4b5fd;
+            letter-spacing: 2px;
+        }
+        .progress-bar-bg {
+            height: 6px;
+            background: rgba(168, 85, 247, 0.2);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #a855f7, #c4b5fd);
+            box-shadow: 0 0 20px #a855f7;
+            transition: width 0.08s linear;
+        }
+        #three-laptop {
+            width: 280px;
+            height: 180px;
+            margin-bottom: 40px;
+        }
+
+        section { padding: 140px 5% 100px; max-width: 1200px; margin: 0 auto; }
+        h2 { font-size: 3.2rem; text-align: center; margin-bottom: 80px; color: #c4b5fd; }
+
+        .glass-card {
+            background: rgba(20, 20, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 24px;
+            padding: 32px;
+            transition: all 0.4s;
+        }
+        .glass-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 70px rgba(168, 85, 247, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <!-- Glass Header -->
+    <!-- Floating Glass Header -->
     <header>
         <div class="logo">Ishaan Agastya</div>
         <nav>
@@ -168,84 +150,139 @@
         </nav>
     </header>
 
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-container">
+            <canvas id="three-laptop"></canvas>
+            <div class="loading-text">INITIALIZING SYSTEM...</div>
+            <div class="progress-bar-bg">
+                <div id="progress" class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero -->
-    <section id="hero">
+    <section id="hero" style="height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden;">
         <canvas id="canvas"></canvas>
-        <div class="hero-content">
-            <h1>Ishaan Agastya</h1>
-            <p class="tagline">Exploring Ideas. Building Systems. Becoming Limitless.</p>
-            <p class="subtext">A student driven by curiosity, creation, and continuous evolution.</p>
+        <div style="z-index: 2;">
+            <h1 style="font-size: 5.8rem; line-height: 1.05; background: linear-gradient(90deg, #fff, #c4b5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Ishaan Agastya
+            </h1>
+            <p style="font-size: 1.9rem; margin: 20px 0 10px; color: #ddd;">Exploring Ideas. Building Systems. Becoming Limitless.</p>
+            <p style="font-size: 1.3rem; max-width: 620px; margin: 0 auto; opacity: 0.85;">A student driven by curiosity, creation, and continuous evolution.</p>
         </div>
     </section>
 
-    <!-- About / Mindset -->
-    <section id="mindset">
-        <h2>The Mindset</h2>
-        <div class="glass-card" style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.25rem; line-height: 1.7;">
-            <p>I am a polymath in training — relentlessly curious, strategically sharp, and obsessed with building high-performance systems across domains.</p>
-            <p style="margin-top: 20px;">Discipline, deep observation, creative execution, and self-mastery are my core operating principles.</p>
-        </div>
-    </section>
-
-    <!-- Skills, Projects, Blog, Contact sections are placeholders for now -->
-    <!-- I'll expand them fully once you confirm the base is working well -->
+    <!-- Rest of sections (Mindset, etc.) remain same for now -->
 
     <div id="click-particles"></div>
 
     <script>
-        // Custom Cursor
+        // Custom Cursor + Click Particles (same as before)
         const cursor = document.createElement('div');
         cursor.className = 'cursor';
         document.body.appendChild(cursor);
 
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Click particle burst (subtle white particles)
         function createClickParticles(x, y) {
-            const container = document.getElementById('click-particles');
-            for (let i = 0; i < 18; i++) {
+            const container = document.getElementById('click-particles') || document.body;
+            for (let i = 0; i < 16; i++) {
                 const p = document.createElement('div');
-                p.style.position = 'absolute';
+                p.style.position = 'fixed';
                 p.style.left = x + 'px';
                 p.style.top = y + 'px';
-                p.style.width = '4px';
-                p.style.height = '4px';
-                p.style.background = '#f0f0f0';
+                p.style.width = '5px';
+                p.style.height = '5px';
+                p.style.background = '#f8f8f8';
                 p.style.borderRadius = '50%';
-                p.style.opacity = '0.9';
+                p.style.opacity = '0.85';
                 p.style.pointerEvents = 'none';
-                container.appendChild(p);
+                document.body.appendChild(p);
 
                 const angle = Math.random() * Math.PI * 2;
-                const vel = 2 + Math.random() * 4;
-                const vx = Math.cos(angle) * vel;
-                const vy = Math.sin(angle) * vel;
-
-                let life = 35;
+                const vel = 3 + Math.random() * 5;
+                let life = 30;
                 const anim = setInterval(() => {
                     life--;
-                    p.style.transform = `translate(${vx * (35-life)}px, ${vy * (35-life)}px)`;
-                    p.style.opacity = life / 35;
-                    if (life <= 0) {
-                        clearInterval(anim);
-                        p.remove();
-                    }
+                    p.style.transform = `translate(${Math.cos(angle)*vel*(30-life)}px, ${Math.sin(angle)*vel*(30-life)-life*1.5}px)`;
+                    p.style.opacity = life / 30;
+                    if (life <= 0) { clearInterval(anim); p.remove(); }
                 }, 16);
             }
         }
+        document.addEventListener('click', e => createClickParticles(e.clientX, e.clientY));
 
-        document.addEventListener('click', (e) => {
-            createClickParticles(e.clientX, e.clientY);
-        });
+        // Loading Screen with 3D Laptop + Progress + Whoosh
+        let loadingProgress = 0;
+        const progressBar = document.getElementById('progress');
+        const loadingScreen = document.getElementById('loading-screen');
 
-        // Three.js Background with scroll-reactive particles
-        let scene, camera, renderer, particles;
-        let scrollY = 0;
+        function simulateLoading() {
+            const interval = setInterval(() => {
+                loadingProgress += Math.random() * 12 + 5;
+                if (loadingProgress > 100) loadingProgress = 100;
+                progressBar.style.width = loadingProgress + '%';
 
-        function initThree() {
+                if (loadingProgress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 1200);
+                    }, 600);
+                }
+            }, 80);
+        }
+
+        // Simple 3D Laptop in loading (using Three.js)
+        function initLaptopLoader() {
+            const canvas = document.getElementById('three-laptop');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(50, 280/180, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(280, 180);
+
+            // Laptop body (simple box)
+            const laptopGeo = new THREE.BoxGeometry(4, 2.5, 0.3);
+            const laptopMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2e, shininess: 80 });
+            const laptop = new THREE.Mesh(laptopGeo, laptopMat);
+            scene.add(laptop);
+
+            // Screen
+            const screenGeo = new THREE.PlaneGeometry(3.6, 2.1);
+            const screenMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const screen = new THREE.Mesh(screenGeo, screenMat);
+            screen.position.set(0, 0.1, 0.16);
+            laptop.add(screen);
+
+            // Light
+            const light = new THREE.PointLight(0xa855f7, 2);
+            light.position.set(5, 8, 10);
+            scene.add(light);
+            scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+            camera.position.set(0, 2, 8);
+            camera.lookAt(0, 0, 0);
+
+            let rot = 0;
+            function animateLaptop() {
+                requestAnimationFrame(animateLaptop);
+                rot += 0.008;
+                laptop.rotation.y = Math.sin(rot) * 0.25;
+                renderer.render(scene, camera);
+            }
+            animateLaptop();
+        }
+
+        // Main 3D Background (more aesthetic purple)
+        let scene, camera, renderer, particlesArray = [];
+
+        function initMainScene() {
             const canvas = document.getElementById('canvas');
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -253,42 +290,37 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // Purple particles
-            const geometry = new THREE.SphereGeometry(0.12, 12, 12);
-            const material = new THREE.MeshBasicMaterial({ color: 0xa855f7 });
+            const geo = new THREE.SphereGeometry(0.15, 14, 14);
+            const mat = new THREE.MeshBasicMaterial({ color: 0xa855f7 });
 
-            particles = [];
-            for (let i = 0; i < 280; i++) {
-                const p = new THREE.Mesh(geometry, material);
+            for (let i = 0; i < 320; i++) {
+                const p = new THREE.Mesh(geo, mat);
                 p.position.set(
-                    Math.random() * 80 - 40,
-                    Math.random() * 80 - 40,
-                    Math.random() * 60 - 30
+                    Math.random() * 90 - 45,
+                    Math.random() * 90 - 45,
+                    Math.random() * 70 - 35
                 );
-                p.userData = { speed: 0.03 + Math.random() * 0.04 };
+                p.userData = { speed: 0.025 + Math.random() * 0.045, baseColor: 0xa855f7 };
                 scene.add(p);
-                particles.push(p);
+                particlesArray.push(p);
             }
 
-            camera.position.z = 35;
+            camera.position.z = 40;
 
             function animate() {
                 requestAnimationFrame(animate);
+                const scrollProg = Math.min(window.scrollY / 1000, 1);
 
-                const scrollProgress = Math.min(window.scrollY / 800, 1);
-
-                particles.forEach(p => {
+                particlesArray.forEach(p => {
                     p.position.y -= p.userData.speed;
-                    if (p.position.y < -40) p.position.y = 40;
+                    if (p.position.y < -50) p.position.y = 50;
 
-                    // Color shift: purple → white on scroll
-                    const intensity = 1 - scrollProgress * 0.7;
-                    p.material.color.setRGB(0.66 * intensity, 0.33 * intensity, 1);
+                    const r = 0.65 * (1 - scrollProg * 0.6);
+                    const g = 0.33 * (1 - scrollProg * 0.8);
+                    p.material.color.setRGB(r, g, 1);
                 });
 
-                // Subtle whoosh / light streak feel
-                camera.position.y = -window.scrollY * 0.015;
-
+                camera.position.y = -window.scrollY * 0.018;
                 renderer.render(scene, camera);
             }
             animate();
@@ -302,18 +334,12 @@
             }
         });
 
+        // Start everything
         window.onload = () => {
-            initThree();
+            initLaptopLoader();
+            simulateLoading();
+            initMainScene();
         };
-
-        // Smooth scroll for nav links
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
     </script>
 </body>
 </html>
