@@ -8,10 +8,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 
-        :root {
-            --purple: #a855f7;
-            --dark: #0a0a0a;
-        }
+        :root { --purple: #a855f7; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -21,56 +18,48 @@
             overflow-x: hidden;
             cursor: none;
         }
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+        h1, h2 { font-family: 'Space Grotesk', sans-serif; }
 
-        /* Floating Glassmorphic Header */
+        /* Floating Glass Header */
         header {
             position: fixed;
             top: 30px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            padding: 14px 50px;
-            background: rgba(15, 15, 25, 0.75);
+            padding: 16px 60px;
+            background: rgba(15, 15, 25, 0.78);
             backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(168, 85, 247, 0.25);
-            border-radius: 60px;
-            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 9999px;
+            box-shadow: 0 15px 50px rgba(168, 85, 247, 0.2);
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: 55px;
         }
-        .logo {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: white;
-        }
+        .logo { font-size: 1.85rem; font-weight: 700; color: white; }
         nav a {
             color: #ddd;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: color 0.3s;
         }
-        nav a:hover { color: var(--purple); text-shadow: 0 0 10px var(--purple); }
+        nav a:hover { color: var(--purple); }
 
         /* Custom Cursor */
         .cursor {
             position: fixed;
-            width: 22px;
-            height: 22px;
+            width: 24px; height: 24px;
             border: 2px solid var(--purple);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             mix-blend-mode: difference;
-            transition: transform 0.08s;
         }
         .cursor::after {
             content: '';
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background: var(--purple);
             border-radius: 50%;
             top: 50%; left: 50%;
@@ -78,67 +67,88 @@
         }
 
         /* Loading Screen */
-        #loading-screen {
+        #loading {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            inset: 0;
             background: #0a0a0a;
             z-index: 99999;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            transition: opacity 1.2s ease;
-        }
-        .loading-container {
-            width: 420px;
-            text-align: center;
+            transition: opacity 1.5s ease;
         }
         .loading-text {
-            font-size: 1.4rem;
-            margin-bottom: 30px;
+            font-size: 1.5rem;
             color: #c4b5fd;
-            letter-spacing: 2px;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
         }
-        .progress-bar-bg {
-            height: 6px;
-            background: rgba(168, 85, 247, 0.2);
+        .progress-bg {
+            width: 460px;
+            height: 5px;
+            background: rgba(168,85,247,0.15);
             border-radius: 50px;
             overflow: hidden;
         }
-        .progress-bar {
+        .progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #a855f7, #c4b5fd);
-            box-shadow: 0 0 20px #a855f7;
-            transition: width 0.08s linear;
+            background: linear-gradient(90deg, #a855f7, #e0bbff);
+            box-shadow: 0 0 25px #a855f7;
+            transition: width 0.1s linear;
         }
-        #three-laptop {
-            width: 280px;
-            height: 180px;
-            margin-bottom: 40px;
+        #laptop-canvas { width: 320px; height: 200px; margin-bottom: 50px; }
+
+        /* Hero */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        #bg-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+        .hero-content { z-index: 2; }
+        .hero-content h1 {
+            font-size: 5.8rem;
+            line-height: 1.05;
+            background: linear-gradient(90deg, #ffffff, #c4b5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .tagline { font-size: 1.95rem; margin: 20px 0 12px; color: #ddd; }
+        .subtext { font-size: 1.3rem; max-width: 680px; margin: 0 auto; opacity: 0.9; }
 
         section { padding: 140px 5% 100px; max-width: 1200px; margin: 0 auto; }
-        h2 { font-size: 3.2rem; text-align: center; margin-bottom: 80px; color: #c4b5fd; }
+        h2 { font-size: 3.3rem; text-align: center; margin-bottom: 80px; color: #c4b5fd; }
 
         .glass-card {
-            background: rgba(20, 20, 30, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(168, 85, 247, 0.25);
-            border-radius: 24px;
-            padding: 32px;
-            transition: all 0.4s;
+            background: rgba(20,20,30,0.75);
+            backdrop-filter: blur(22px);
+            border: 1px solid rgba(168,85,247,0.25);
+            border-radius: 28px;
+            padding: 36px;
+            transition: all 0.4s ease;
         }
         .glass-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 30px 70px rgba(168, 85, 247, 0.3);
+            transform: translateY(-16px);
+            box-shadow: 0 35px 80px rgba(168,85,247,0.28);
         }
+
+        #click-particles { position: fixed; inset: 0; pointer-events: none; z-index: 9998; }
     </style>
 </head>
 <body>
 
-    <!-- Floating Glass Header -->
+    <!-- Floating Header -->
     <header>
         <div class="logo">Ishaan Agastya</div>
         <nav>
@@ -151,194 +161,205 @@
     </header>
 
     <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="loading-container">
-            <canvas id="three-laptop"></canvas>
-            <div class="loading-text">INITIALIZING SYSTEM...</div>
-            <div class="progress-bar-bg">
-                <div id="progress" class="progress-bar"></div>
-            </div>
+    <div id="loading">
+        <canvas id="laptop-canvas"></canvas>
+        <div class="loading-text">INITIALIZING SYSTEM...</div>
+        <div class="progress-bg">
+            <div id="progress" class="progress"></div>
         </div>
     </div>
 
     <!-- Hero -->
-    <section id="hero" style="height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden;">
-        <canvas id="canvas"></canvas>
-        <div style="z-index: 2;">
-            <h1 style="font-size: 5.8rem; line-height: 1.05; background: linear-gradient(90deg, #fff, #c4b5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                Ishaan Agastya
-            </h1>
-            <p style="font-size: 1.9rem; margin: 20px 0 10px; color: #ddd;">Exploring Ideas. Building Systems. Becoming Limitless.</p>
-            <p style="font-size: 1.3rem; max-width: 620px; margin: 0 auto; opacity: 0.85;">A student driven by curiosity, creation, and continuous evolution.</p>
+    <section id="hero">
+        <canvas id="bg-canvas"></canvas>
+        <div class="hero-content">
+            <h1>Ishaan Agastya</h1>
+            <p class="tagline">Exploring Ideas. Building Systems. Becoming Limitless.</p>
+            <p class="subtext">A student driven by curiosity, creation, and continuous evolution.</p>
         </div>
     </section>
 
-    <!-- Rest of sections (Mindset, etc.) remain same for now -->
+    <!-- Placeholder for other sections -->
+    <section id="mindset">
+        <h2>The Mindset</h2>
+        <div class="glass-card" style="max-width: 820px; margin: 0 auto; text-align: center;">
+            <p style="font-size: 1.25rem; line-height: 1.8;">I am a polymath in training — relentlessly curious, strategically sharp, and obsessed with building high-performance systems across domains.</p>
+        </div>
+    </section>
 
     <div id="click-particles"></div>
 
     <script>
-        // Custom Cursor + Click Particles (same as before)
+        // Cursor
         const cursor = document.createElement('div');
         cursor.className = 'cursor';
         document.body.appendChild(cursor);
-
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        function createClickParticles(x, y) {
-            const container = document.getElementById('click-particles') || document.body;
-            for (let i = 0; i < 16; i++) {
+        // Click particles
+        function burstParticles(x, y) {
+            for (let i = 0; i < 18; i++) {
                 const p = document.createElement('div');
                 p.style.position = 'fixed';
                 p.style.left = x + 'px';
                 p.style.top = y + 'px';
                 p.style.width = '5px';
                 p.style.height = '5px';
-                p.style.background = '#f8f8f8';
+                p.style.background = '#f0f0f0';
                 p.style.borderRadius = '50%';
-                p.style.opacity = '0.85';
-                p.style.pointerEvents = 'none';
+                p.style.opacity = '0.9';
                 document.body.appendChild(p);
 
                 const angle = Math.random() * Math.PI * 2;
-                const vel = 3 + Math.random() * 5;
-                let life = 30;
+                const speed = 3 + Math.random() * 6;
+                let life = 32;
                 const anim = setInterval(() => {
                     life--;
-                    p.style.transform = `translate(${Math.cos(angle)*vel*(30-life)}px, ${Math.sin(angle)*vel*(30-life)-life*1.5}px)`;
-                    p.style.opacity = life / 30;
+                    const dx = Math.cos(angle) * speed * (32 - life);
+                    const dy = Math.sin(angle) * speed * (32 - life) - life * 1.2;
+                    p.style.transform = `translate(${dx}px, ${dy}px)`;
+                    p.style.opacity = life / 32;
                     if (life <= 0) { clearInterval(anim); p.remove(); }
                 }, 16);
             }
         }
-        document.addEventListener('click', e => createClickParticles(e.clientX, e.clientY));
+        document.addEventListener('click', e => burstParticles(e.clientX, e.clientY));
 
-        // Loading Screen with 3D Laptop + Progress + Whoosh
-        let loadingProgress = 0;
-        const progressBar = document.getElementById('progress');
-        const loadingScreen = document.getElementById('loading-screen');
+        // Loading Screen with Laptop
+        let progress = 0;
+        const progressEl = document.getElementById('progress');
+        const loadingScreen = document.getElementById('loading');
 
-        function simulateLoading() {
-            const interval = setInterval(() => {
-                loadingProgress += Math.random() * 12 + 5;
-                if (loadingProgress > 100) loadingProgress = 100;
-                progressBar.style.width = loadingProgress + '%';
+        function runLoading() {
+            const int = setInterval(() => {
+                progress += 4 + Math.random() * 9;
+                if (progress > 100) progress = 100;
+                progressEl.style.width = progress + '%';
 
-                if (loadingProgress >= 100) {
-                    clearInterval(interval);
+                if (progress >= 100) {
+                    clearInterval(int);
                     setTimeout(() => {
                         loadingScreen.style.opacity = '0';
-                        setTimeout(() => {
-                            loadingScreen.style.display = 'none';
-                        }, 1200);
-                    }, 600);
+                        setTimeout(() => loadingScreen.remove(), 1600);
+                    }, 700);
                 }
-            }, 80);
+            }, 70);
         }
 
-        // Simple 3D Laptop in loading (using Three.js)
-        function initLaptopLoader() {
-            const canvas = document.getElementById('three-laptop');
+        // 3D Laptop in Loading (turns on with white screen)
+        function createLaptopLoader() {
+            const canvas = document.getElementById('laptop-canvas');
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(50, 280/180, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-            renderer.setSize(280, 180);
+            const camera = new THREE.PerspectiveCamera(55, 320/200, 0.1, 100);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(320, 200);
 
-            // Laptop body (simple box)
-            const laptopGeo = new THREE.BoxGeometry(4, 2.5, 0.3);
-            const laptopMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2e, shininess: 80 });
-            const laptop = new THREE.Mesh(laptopGeo, laptopMat);
-            scene.add(laptop);
+            // Laptop body
+            const body = new THREE.Mesh(
+                new THREE.BoxGeometry(5.2, 3.2, 0.4),
+                new THREE.MeshPhongMaterial({ color: 0x111122, shininess: 90 })
+            );
+            scene.add(body);
 
             // Screen
-            const screenGeo = new THREE.PlaneGeometry(3.6, 2.1);
+            const screenGeo = new THREE.PlaneGeometry(4.6, 2.7);
             const screenMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
             const screen = new THREE.Mesh(screenGeo, screenMat);
-            screen.position.set(0, 0.1, 0.16);
-            laptop.add(screen);
+            screen.position.z = 0.21;
+            body.add(screen);
 
-            // Light
-            const light = new THREE.PointLight(0xa855f7, 2);
-            light.position.set(5, 8, 10);
-            scene.add(light);
-            scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+            // Lights
+            scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+            const pointLight = new THREE.PointLight(0xa855f7, 3);
+            pointLight.position.set(6, 10, 12);
+            scene.add(pointLight);
 
-            camera.position.set(0, 2, 8);
-            camera.lookAt(0, 0, 0);
+            camera.position.set(0, 3, 9);
+            camera.lookAt(0, 0.5, 0);
 
-            let rot = 0;
+            let time = 0;
             function animateLaptop() {
                 requestAnimationFrame(animateLaptop);
-                rot += 0.008;
-                laptop.rotation.y = Math.sin(rot) * 0.25;
+                time += 0.025;
+                body.rotation.y = Math.sin(time * 0.6) * 0.18;
+
+                // Turn on screen after 40% progress
+                if (progress > 40) {
+                    screen.material.color.setHex(0x1a0033);
+                }
                 renderer.render(scene, camera);
             }
             animateLaptop();
         }
 
-        // Main 3D Background (more aesthetic purple)
-        let scene, camera, renderer, particlesArray = [];
+        // Main Background 3D Scene
+        let bgScene, bgCamera, bgRenderer, bgParticles = [];
 
-        function initMainScene() {
-            const canvas = document.getElementById('canvas');
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        function initBackground() {
+            const canvas = document.getElementById('bg-canvas');
+            bgScene = new THREE.Scene();
+            bgCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            bgRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            bgRenderer.setSize(window.innerWidth, window.innerHeight);
+            bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            const geo = new THREE.SphereGeometry(0.15, 14, 14);
+            const geo = new THREE.SphereGeometry(0.18, 16, 16);
             const mat = new THREE.MeshBasicMaterial({ color: 0xa855f7 });
 
-            for (let i = 0; i < 320; i++) {
+            for (let i = 0; i < 340; i++) {
                 const p = new THREE.Mesh(geo, mat);
-                p.position.set(
-                    Math.random() * 90 - 45,
-                    Math.random() * 90 - 45,
-                    Math.random() * 70 - 35
-                );
-                p.userData = { speed: 0.025 + Math.random() * 0.045, baseColor: 0xa855f7 };
-                scene.add(p);
-                particlesArray.push(p);
+                p.position.set(Math.random()*100-50, Math.random()*100-50, Math.random()*80-40);
+                p.userData.speed = 0.028 + Math.random() * 0.05;
+                bgScene.add(p);
+                bgParticles.push(p);
             }
 
-            camera.position.z = 40;
+            bgCamera.position.z = 42;
 
-            function animate() {
-                requestAnimationFrame(animate);
-                const scrollProg = Math.min(window.scrollY / 1000, 1);
+            function animateBg() {
+                requestAnimationFrame(animateBg);
+                const scrollProg = Math.min(window.scrollY / 1200, 1);
 
-                particlesArray.forEach(p => {
+                bgParticles.forEach(p => {
                     p.position.y -= p.userData.speed;
-                    if (p.position.y < -50) p.position.y = 50;
+                    if (p.position.y < -55) p.position.y = 55;
 
-                    const r = 0.65 * (1 - scrollProg * 0.6);
-                    const g = 0.33 * (1 - scrollProg * 0.8);
-                    p.material.color.setRGB(r, g, 1);
+                    const shift = 1 - scrollProg * 0.75;
+                    p.material.color.setRGB(0.65 * shift, 0.33 * shift, 1);
                 });
 
-                camera.position.y = -window.scrollY * 0.018;
-                renderer.render(scene, camera);
+                bgCamera.position.y = -window.scrollY * 0.022;
+                bgRenderer.render(bgScene, bgCamera);
             }
-            animate();
+            animateBg();
         }
 
+        // Resize handler
         window.addEventListener('resize', () => {
-            if (camera && renderer) {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
+            if (bgCamera && bgRenderer) {
+                bgCamera.aspect = window.innerWidth / window.innerHeight;
+                bgCamera.updateProjectionMatrix();
+                bgRenderer.setSize(window.innerWidth, window.innerHeight);
             }
+        });
+
+        // Smooth nav
+        document.querySelectorAll('nav a').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
         });
 
         // Start everything
         window.onload = () => {
-            initLaptopLoader();
-            simulateLoading();
-            initMainScene();
+            createLaptopLoader();
+            runLoading();
+            initBackground();
         };
     </script>
 </body>
