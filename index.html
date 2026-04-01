@@ -8,7 +8,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 
-        :root { --accent: #a855f7; } /* only subtle purple glows */
+        :root { --accent: #a855f7; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -20,7 +20,7 @@
         }
         h1, h2 { font-family: 'Space Grotesk', sans-serif; }
 
-        /* Super Glassy Header - lighter + stronger blur */
+        /* Super Glassy Header */
         header {
             position: fixed;
             top: 35px;
@@ -40,12 +40,7 @@
             gap: 70px;
             font-size: 1.15rem;
         }
-        .logo {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -0.7px;
-        }
+        .logo { font-size: 2.25rem; font-weight: 700; color: #ffffff; letter-spacing: -0.7px; }
         nav a {
             color: #ccc;
             text-decoration: none;
@@ -57,7 +52,7 @@
             text-shadow: 0 0 20px rgba(168, 85, 247, 0.7);
         }
 
-        /* Custom Cursor */
+        /* Cursor */
         .cursor {
             position: fixed;
             width: 26px; height: 26px;
@@ -66,7 +61,6 @@
             pointer-events: none;
             z-index: 9999;
             mix-blend-mode: difference;
-            transition: transform 0.08s;
         }
         .cursor::after {
             content: '';
@@ -111,7 +105,7 @@
         }
         #laptop-canvas { width: 340px; height: 210px; margin-bottom: 55px; }
 
-        /* Hero */
+        /* Hero with Parallax 3D Laptop */
         #hero {
             height: 100vh;
             display: flex;
@@ -121,17 +115,21 @@
             position: relative;
             overflow: hidden;
         }
-        #bg-canvas {
+        #hero-canvas {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
         }
-        .hero-content { z-index: 2; }
+        .hero-content {
+            z-index: 2;
+            pointer-events: none;
+        }
         .hero-content h1 {
             font-size: 6.4rem;
             line-height: 1.02;
             color: #ffffff;
+            text-shadow: 0 0 40px rgba(255,255,255,0.1);
         }
         .tagline { font-size: 2.05rem; margin: 28px 0 18px; color: #ddd; }
         .subtext { font-size: 1.38rem; max-width: 740px; margin: 0 auto; opacity: 0.9; }
@@ -192,9 +190,9 @@
         </div>
     </div>
 
-    <!-- Hero -->
+    <!-- Hero with Parallax 3D Laptop + Dots -->
     <section id="hero">
-        <canvas id="bg-canvas"></canvas>
+        <canvas id="hero-canvas"></canvas>
         <div class="hero-content">
             <h1>Ishaan Agastya</h1>
             <p class="tagline">Exploring Ideas. Building Systems. Becoming Limitless.</p>
@@ -202,59 +200,18 @@
         </div>
     </section>
 
-    <!-- The Mindset -->
+    <!-- Other sections (keep expanding as needed) -->
     <section id="mindset">
         <h2>The Mindset</h2>
         <div class="glass-card" style="max-width: 880px; margin: 0 auto; text-align: center; font-size: 1.3rem; line-height: 1.85;">
             <p>I am a polymath in training — relentlessly curious, strategically sharp, and obsessed with building high-performance systems across domains.</p>
-            <p style="margin-top: 30px;">Discipline, deep observation, creative execution, and self-mastery are my core operating principles.</p>
-        </div>
-    </section>
-
-    <!-- Skill Matrix -->
-    <section id="skills">
-        <h2>Skill Matrix</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-            <div class="glass-card"><strong>Cognitive & Strategy</strong><br>Strategic Thinking, Observation, Decision Making, Chess Thinking</div>
-            <div class="glass-card"><strong>Technical</strong><br>Python, C, Systems Thinking, Web Development</div>
-            <div class="glass-card"><strong>Creative</strong><br>Thumbnail Design, Visual Composition, UI Sense, Creative Direction</div>
-            <div class="glass-card"><strong>Media</strong><br>Video Editing, Content Structuring, YouTube Strategy</div>
-            <div class="glass-card"><strong>Communication</strong><br>Public Speaking, Debate, Persuasion</div>
-            <div class="glass-card"><strong>Physical & Discipline</strong><br>Calisthenics, Sports, NCC (Best Cadet)</div>
-        </div>
-    </section>
-
-    <!-- Creations -->
-    <section id="creations">
-        <h2>Creations</h2>
-        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-            <p style="opacity: 0.85; font-size: 1.25rem;">Personal Systems • Thumbnail Series • YouTube Journey • Thunderbolt Vanguard (Manga) • Tech Ideas</p>
-            <p style="margin-top: 40px; opacity: 0.7;">Full case studies coming soon.</p>
-        </div>
-    </section>
-
-    <!-- The Lab (Blog) -->
-    <section id="lab">
-        <h2>The Lab</h2>
-        <div class="glass-card" style="max-width: 900px; margin: 0 auto; text-align: center;">
-            <p style="font-size: 1.25rem;">Psychology • Strategy • Self-Improvement Experiments • Learning Methods • Deep Observations</p>
-            <p style="margin-top: 30px; opacity: 0.75;">A space for documenting experiments, insights, and systems.</p>
-        </div>
-    </section>
-
-    <!-- Access Point -->
-    <section id="access">
-        <h2>Access Point</h2>
-        <div class="glass-card" style="max-width: 600px; margin: 0 auto; text-align: center; font-size: 1.3rem;">
-            <p>YouTube • Instagram • LinkedIn • Email</p>
-            <p style="margin-top: 30px; opacity: 0.8;">Open for collaborations and meaningful conversations.</p>
         </div>
     </section>
 
     <div id="click-particles"></div>
 
     <script>
-        // Custom Cursor
+        // Cursor + Click Particles
         const cursor = document.createElement('div');
         cursor.className = 'cursor';
         document.body.appendChild(cursor);
@@ -264,7 +221,6 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Click particles - perfectly centered on cursor
         function burstParticles(x, y) {
             for (let i = 0; i < 24; i++) {
                 const p = document.createElement('div');
@@ -281,23 +237,19 @@
                 const angle = Math.random() * Math.PI * 2;
                 const vel = 4.5 + Math.random() * 7;
                 let life = 38;
-
                 const anim = setInterval(() => {
                     life--;
                     const dx = Math.cos(angle) * vel * (38 - life) * 0.85;
                     const dy = Math.sin(angle) * vel * (38 - life) * 0.85 - (38 - life) * 1.6;
                     p.style.transform = `translate(${dx}px, ${dy}px)`;
                     p.style.opacity = life / 38;
-                    if (life <= 0) {
-                        clearInterval(anim);
-                        p.remove();
-                    }
+                    if (life <= 0) { clearInterval(anim); p.remove(); }
                 }, 16);
             }
         }
         document.addEventListener('click', (e) => burstParticles(e.clientX, e.clientY));
 
-        // Loading Screen
+        // Loading Screen (unchanged)
         let progress = 0;
         const progressEl = document.getElementById('progress');
         const loadingScreen = document.getElementById('loading');
@@ -307,7 +259,6 @@
                 progress += 5 + Math.random() * 12;
                 if (progress > 100) progress = 100;
                 progressEl.style.width = progress + '%';
-
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(() => {
@@ -318,8 +269,8 @@
             }, 75);
         }
 
-        // 3D Laptop Loader
         function createLaptopLoader() {
+            // Simple loading laptop (kept for consistency)
             const canvas = document.getElementById('laptop-canvas');
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(55, 340/210, 0.1, 100);
@@ -328,7 +279,6 @@
 
             const body = new THREE.Mesh(new THREE.BoxGeometry(5.4, 3.4, 0.45), new THREE.MeshPhongMaterial({color: 0x111122, shininess: 100}));
             scene.add(body);
-
             const screen = new THREE.Mesh(new THREE.PlaneGeometry(4.8, 2.9), new THREE.MeshBasicMaterial({color: 0x000000}));
             screen.position.z = 0.23;
             body.add(screen);
@@ -352,71 +302,123 @@
             animate();
         }
 
-        // Background 3D Particles (white base + subtle purple shift)
-        let bgScene, bgCamera, bgRenderer, bgParticles = [];
+        // === HERO: Parallax 3D Laptop + Aesthetic Dots ===
+        let heroScene, heroCamera, heroRenderer;
+        let laptop, laptopLid, particles = [];
+        let mouseX = 0, mouseY = 0;
 
-        function initBackground() {
-            const canvas = document.getElementById('bg-canvas');
-            bgScene = new THREE.Scene();
-            bgCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            bgRenderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-            bgRenderer.setSize(window.innerWidth, window.innerHeight);
-            bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        function initHeroScene() {
+            const canvas = document.getElementById('hero-canvas');
+            heroScene = new THREE.Scene();
+            heroCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            heroRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            heroRenderer.setSize(window.innerWidth, window.innerHeight);
+            heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            const geo = new THREE.SphereGeometry(0.22, 16, 16);
+            // Lights
+            heroScene.add(new THREE.AmbientLight(0xffffff, 0.7));
+            const pointLight = new THREE.PointLight(0xa855f7, 3, 100);
+            pointLight.position.set(10, 15, 20);
+            heroScene.add(pointLight);
 
-            for (let i = 0; i < 380; i++) {
-                const mat = new THREE.MeshBasicMaterial({ color: 0xeeeeee });
-                const p = new THREE.Mesh(geo, mat);
-                p.position.set(Math.random()*120 - 60, Math.random()*120 - 60, Math.random()*100 - 50);
-                p.userData = { speed: 0.032 + Math.random() * 0.07 };
-                bgScene.add(p);
-                bgParticles.push(p);
+            // Laptop Body (base)
+            const bodyGeo = new THREE.BoxGeometry(6, 0.4, 4);
+            const bodyMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2e, shininess: 90 });
+            laptop = new THREE.Mesh(bodyGeo, bodyMat);
+            laptop.position.y = -1.2;
+            heroScene.add(laptop);
+
+            // Laptop Lid (screen) - starts closed, opens on load
+            const lidGeo = new THREE.BoxGeometry(6, 3.8, 0.2);
+            const lidMat = new THREE.MeshPhongMaterial({ color: 0x0f0f1f, shininess: 100 });
+            laptopLid = new THREE.Mesh(lidGeo, lidMat);
+            laptopLid.position.set(0, 1.9, -1.8);
+            laptopLid.rotation.x = Math.PI * 0.95; // almost closed
+            laptop.add(laptopLid);
+
+            // Screen glow plane
+            const screenGeo = new THREE.PlaneGeometry(5.6, 3.4);
+            const screenMat = new THREE.MeshBasicMaterial({ color: 0x220033 });
+            const screen = new THREE.Mesh(screenGeo, screenMat);
+            screen.position.set(0, 0, 0.11);
+            laptopLid.add(screen);
+
+            // Aesthetic Dots / Particles around laptop
+            const particleGeo = new THREE.SphereGeometry(0.08, 8, 8);
+            const particleMat = new THREE.MeshBasicMaterial({ color: 0xdddddd });
+
+            for (let i = 0; i < 220; i++) {
+                const p = new THREE.Mesh(particleGeo, particleMat);
+                p.position.set(
+                    (Math.random() - 0.5) * 40,
+                    (Math.random() - 0.5) * 30,
+                    (Math.random() - 0.5) * 25 - 10
+                );
+                p.userData = { baseX: p.position.x, baseY: p.position.y };
+                heroScene.add(p);
+                particles.push(p);
             }
 
-            bgCamera.position.z = 48;
+            heroCamera.position.set(0, 2, 18);
+            heroCamera.lookAt(0, 0, 0);
 
-            function animateBg() {
-                requestAnimationFrame(animateBg);
-                const scrollProg = Math.min(window.scrollY / 1500, 1);
+            // Mouse move for parallax
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
 
-                bgParticles.forEach(p => {
-                    p.position.y -= p.userData.speed;
-                    if (p.position.y < -65) p.position.y = 65;
+            let openProgress = 0;
+            function animateHero() {
+                requestAnimationFrame(animateHero);
 
-                    const shift = 1 - scrollProg * 0.45;
-                    p.material.color.setRGB(0.98 * shift, 0.98 * shift, 1);
+                // Smooth laptop opening
+                if (openProgress < 1) {
+                    openProgress += 0.008;
+                    laptopLid.rotation.x = Math.PI * (0.95 - openProgress * 0.85);
+                }
+
+                // Parallax on laptop
+                laptop.rotation.y = mouseX * 0.18;
+                laptop.rotation.x = mouseY * 0.12;
+                laptop.position.x = mouseX * 1.2;
+                laptop.position.y = -1.2 + mouseY * 0.8;
+
+                // Particles gentle parallax
+                particles.forEach(p => {
+                    p.position.x = p.userData.baseX + mouseX * 4;
+                    p.position.y = p.userData.baseY + mouseY * 3;
+                    p.rotation.y += 0.002;
                 });
 
-                bgCamera.position.y = -window.scrollY * 0.022;
-                bgRenderer.render(bgScene, bgCamera);
+                heroRenderer.render(heroScene, heroCamera);
             }
-            animateBg();
+            animateHero();
         }
 
-        // Smooth scrolling nav
+        // Resize
+        window.addEventListener('resize', () => {
+            if (heroCamera && heroRenderer) {
+                heroCamera.aspect = window.innerWidth / window.innerHeight;
+                heroCamera.updateProjectionMatrix();
+                heroRenderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        });
+
+        // Smooth nav
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
+                document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
             });
         });
 
-        // Initialize
+        // Start everything
         window.onload = () => {
             createLaptopLoader();
             runLoading();
-            initBackground();
+            initHeroScene();
         };
-
-        window.addEventListener('resize', () => {
-            if (bgCamera && bgRenderer) {
-                bgCamera.aspect = window.innerWidth / window.innerHeight;
-                bgCamera.updateProjectionMatrix();
-                bgRenderer.setSize(window.innerWidth, window.innerHeight);
-            }
-        });
     </script>
 </body>
 </html>
